@@ -5,15 +5,26 @@ plugins {
     application
 }
 
-group = "io.github.doohochang"
-version = "0.1.0"
+/** Settings for all projects from here. */
+allprojects {
+    group = "io.github.doohochang"
+    version = "0.1.0"
 
-repositories {
-    mavenCentral()
+    apply(plugin = "org.jetbrains.kotlin.jvm")
+    apply(plugin = "java")
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation(kotlin("stdlib"))
+    }
 }
 
+/** Settings for only the root project from here. */
 dependencies {
-    implementation(kotlin("stdlib"))
+    implementation(project("subprojects:boot"))
 }
 
 application {
