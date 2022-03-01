@@ -1,6 +1,8 @@
 plugins {
     kotlin("jvm") version "1.6.10"
     java
+
+    application
 }
 
 group = "io.github.doohochang"
@@ -12,10 +14,8 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
+application {
+    mainClass.set("io.github.doohochang.ktserver.MainKt")
 }
