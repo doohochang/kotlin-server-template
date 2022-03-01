@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.6.10"
+    kotlin("jvm") version Version.KOTLIN
     java
 
     application
@@ -8,7 +8,7 @@ plugins {
 /** Settings for all projects from here. */
 allprojects {
     group = "io.github.doohochang"
-    version = "0.1.0"
+    version = Version.KT_SERVER
 
     apply(plugin = "org.jetbrains.kotlin.jvm")
     apply(plugin = "java")
