@@ -29,7 +29,7 @@ allprojects {
 
 /** Settings for only the root project from here. */
 dependencies {
-    implementation(project("subprojects:boot"))
+    implementation(project("subproject:boot"))
 }
 
 application {

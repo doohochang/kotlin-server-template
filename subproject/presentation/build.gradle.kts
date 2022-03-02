@@ -3,6 +3,8 @@ plugins {
 }
 
 dependencies {
+    api(project(":subproject:domain"))
+
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
 
     implementation("io.ktor:ktor-server-core:1.6.7")
