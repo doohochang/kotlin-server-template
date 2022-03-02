@@ -14,7 +14,7 @@ suspend fun main() {
         Server.start(httpConfiguration.port)
     }
 
-    when(result) {
+    when (result) {
         is Either.Right -> println("Server has been started successfully.")
         is Either.Left -> println(result.value)
     }

@@ -1,7 +1,9 @@
 plugins {
     java
-    kotlin("jvm") version Version.KOTLIN
+    kotlinJvm
     application
+
+    gradleKtlint
 }
 
 /** Settings for all projects from here. */
@@ -9,8 +11,9 @@ allprojects {
     group = "io.github.doohochang"
     version = Version.KOTLIN_SERVER_TEMPLATE
 
-    applyKotlinJvmPlugin()
     applyJavaPlugin()
+    applyKotlinJvmPlugin()
+    applyGradleKtlintPlugin()
 
     repositories {
         mavenCentral()
@@ -22,6 +25,11 @@ allprojects {
         implementation(KOTLINX_COROUTINES_CORE)
         implementation(ARROW_CORE)
         implementation(LOGBACK)
+    }
+
+    /** Lint settings. */
+    configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+        disabledRules.set(setOf("no-wildcard-imports"))
     }
 }
 
