@@ -10,4 +10,6 @@ dependencies {
     implementation(KTOR_SERVER_CORE)
     implementation(KTOR_SERVER_NETTY)
     implementation(KTOR_SERIALIZATION)
+
+    implementation(TYPESAFE_CONFIG)
 }

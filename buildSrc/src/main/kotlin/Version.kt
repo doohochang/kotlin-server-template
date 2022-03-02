@@ -11,4 +11,6 @@ object Version {
     const val LOGBACK = "1.2.10"
 
     const val KTOR = "1.6.7"
+
+    const val TYPESAFE_CONFIG = "1.4.1"
 }
