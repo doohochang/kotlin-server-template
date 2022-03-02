@@ -3,7 +3,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":subproject:domain"))
-    implementation(project(":subproject:infrastructure"))
-    implementation(project(":subproject:presentation"))
+    implementation(DOMAIN)
+    implementation(INFRASTRUCTURE)
+    implementation(PRESENTATION)
 }

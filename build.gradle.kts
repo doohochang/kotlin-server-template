@@ -1,16 +1,16 @@
 plugins {
     java
-    kotlin("jvm") version "1.6.10"
+    kotlin("jvm") version Version.KOTLIN
     application
 }
 
 /** Settings for all projects from here. */
 allprojects {
     group = "io.github.doohochang"
-    version = "0.1.0"
+    version = Version.KOTLIN_SERVER_TEMPLATE
 
-    apply(plugin = "org.jetbrains.kotlin.jvm")
-    apply(plugin = "java")
+    applyKotlinJvmPlugin()
+    applyJavaPlugin()
 
     repositories {
         mavenCentral()
@@ -19,17 +19,15 @@ allprojects {
     dependencies {
         implementation(kotlin("stdlib"))
 
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
-
-        implementation("io.arrow-kt:arrow-core:1.0.1")
-
-        implementation("ch.qos.logback:logback-classic:1.2.10")
+        implementation(KOTLINX_COROUTINES_CORE)
+        implementation(ARROW_CORE)
+        implementation(LOGBACK)
     }
 }
 
 /** Settings for only the root project from here. */
 dependencies {
-    implementation(project("subproject:boot"))
+    implementation(BOOT)
 }
 
 application {

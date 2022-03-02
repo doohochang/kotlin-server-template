@@ -1,13 +1,13 @@
 plugins {
-    kotlin("plugin.serialization") version "1.6.10"
+    kotlin("plugin.serialization") version Version.KOTLIN
 }
 
 dependencies {
-    api(project(":subproject:domain"))
+    api(DOMAIN)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+    implementation(KOTLINX_SERIALIZATION_JSON)
 
-    implementation("io.ktor:ktor-server-core:1.6.7")
-    implementation("io.ktor:ktor-server-netty:1.6.7")
-    implementation("io.ktor:ktor-serialization:1.6.7")
+    implementation(KTOR_SERVER_CORE)
+    implementation(KTOR_SERVER_NETTY)
+    implementation(KTOR_SERIALIZATION)
 }
