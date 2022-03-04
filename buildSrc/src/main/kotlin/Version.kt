@@ -4,6 +4,7 @@ object Version {
     const val KOTLIN = "1.6.10"
 
     const val GRADLE_KTLINT = "10.2.1"
+    const val GRADLE_SHADOW = "7.0.0"
 
     const val KOTLINX_COROUTINES = "1.6.0"
     const val KOTLINX_SERIALIZATION_JSON = "1.3.2"

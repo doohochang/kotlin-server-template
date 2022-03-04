@@ -4,6 +4,7 @@ plugins {
     application
 
     gradleKtlint
+    gradleShadow
 }
 
 /** Settings for all projects from here. */
@@ -40,4 +41,12 @@ dependencies {
 
 application {
     mainClass.set("io.github.doohochang.ktserver.MainKt")
+}
+
+tasks {
+    shadowJar {
+        manifest {
+            attributes(Pair("Main-Class", "io.github.doohochang.ktserver.MainKt"))
+        }
+    }
 }

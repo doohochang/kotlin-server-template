@@ -17,3 +17,5 @@ val PluginDependenciesSpec.gradleKtlint get() = id("org.jlleitschuh.gradle.ktlin
 fun PluginAware.applyGradleKtlintPlugin() {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
 }
+
+val PluginDependenciesSpec.gradleShadow get() = id("com.github.johnrengelman.shadow") version Version.GRADLE_SHADOW
