@@ -5,7 +5,7 @@ import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-fun Application.greetingModule() {
+fun Application.installGreetingApi() {
     routing {
         get("/greeting/{name}") {
             val name = call.parameters["name"]
