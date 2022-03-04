@@ -1,5 +1,6 @@
 dependencies {
-    api(DOMAIN)
+    implementation(DOMAIN)
+    implementation(LOGGING)
 
     implementation(TYPESAFE_CONFIG)
 }

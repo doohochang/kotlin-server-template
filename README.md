@@ -35,6 +35,8 @@ It contains logic to support network protocols such as HTTP, gRPC and also API s
 Boot depends on all other subprojects and connects implementations of them to run a server application.
 In other words, it is responsible for dependency injection (DI).
 It also contains several resource files to run a server.
+### Other subprojects
+* [logging](subproject/logging) provides logback library dependency and configuration of it for global use in the project.
 
 ## Gradle Setting
 [Root build.gradle.kts](build.gradle.kts) contains settings commonly shared to all subprojects, and also several task settings for the entire application.

@@ -6,6 +6,7 @@ val DependencyHandlerScope.DOMAIN get() = project(":subproject:domain")
 val DependencyHandlerScope.INFRASTRUCTURE get() = project(":subproject:infrastructure")
 val DependencyHandlerScope.PRESENTATION get() = project(":subproject:presentation")
 val DependencyHandlerScope.BOOT get() = project(":subproject:boot")
+val DependencyHandlerScope.LOGGING get() = project(":subproject:logging")
 
 /** External libraries from here. */
 val DependencyHandlerScope.KOTLINX_COROUTINES_CORE

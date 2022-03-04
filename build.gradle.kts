@@ -25,7 +25,6 @@ allprojects {
 
         implementation(KOTLINX_COROUTINES_CORE)
         implementation(ARROW_CORE)
-        implementation(LOGBACK)
     }
 
     /** Lint settings. */

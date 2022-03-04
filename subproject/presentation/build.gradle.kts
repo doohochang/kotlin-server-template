@@ -3,7 +3,8 @@ plugins {
 }
 
 dependencies {
-    api(DOMAIN)
+    implementation(DOMAIN)
+    implementation(LOGGING)
 
     implementation(KOTLINX_SERIALIZATION_JSON)
 
