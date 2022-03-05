@@ -9,6 +9,10 @@ val DependencyHandlerScope.BOOT get() = project(":subproject:boot")
 val DependencyHandlerScope.LOGGING get() = project(":subproject:logging")
 
 /** External libraries from here. */
+val DependencyHandlerScope.KOTEST get() = "io.kotest:kotest-runner-junit5:${Version.KOTEST}"
+val DependencyHandlerScope.KOTEST_ASSERTIONS_ARROW
+    get() = "io.kotest.extensions:kotest-assertions-arrow:${Version.KOTEST_ASSERTIONS_ARROW}"
+
 val DependencyHandlerScope.KOTLINX_COROUTINES_CORE
     get() = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.KOTLINX_COROUTINES}"
 

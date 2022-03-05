@@ -25,11 +25,19 @@ allprojects {
 
         implementation(KOTLINX_COROUTINES_CORE)
         implementation(ARROW_CORE)
+
+        testImplementation(KOTEST)
+        testImplementation(KOTEST_ASSERTIONS_ARROW)
     }
 
     /** Lint settings. */
     configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
         disabledRules.set(setOf("no-wildcard-imports"))
+    }
+
+    /** Test platform setting for Kotest. */
+    tasks.withType<Test>().configureEach {
+        useJUnitPlatform()
     }
 }
 

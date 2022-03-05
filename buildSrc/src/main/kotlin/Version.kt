@@ -3,6 +3,9 @@ object Version {
 
     const val KOTLIN = "1.6.10"
 
+    const val KOTEST = "5.1.0"
+    const val KOTEST_ASSERTIONS_ARROW = "1.2.3"
+
     const val GRADLE_KTLINT = "10.2.1"
     const val GRADLE_SHADOW = "7.0.0"
 
