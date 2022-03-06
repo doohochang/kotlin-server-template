@@ -3,8 +3,8 @@ plugins {
     kotlinJvm
     application
 
-    gradleKtlint
-    gradleShadow
+    ktlint
+    shadow
 }
 
 /** Settings for all projects from here. */

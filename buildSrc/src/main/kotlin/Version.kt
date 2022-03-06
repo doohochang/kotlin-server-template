@@ -21,4 +21,7 @@ object Version {
     const val KTOR = "1.6.7"
 
     const val TYPESAFE_CONFIG = "1.4.1"
+
+    const val SPRING_DATA_R2DBC = "1.4.2"
+    const val R2DBC_BOM = "Arabba-SR12"
 }
