@@ -28,6 +28,7 @@ allprojects {
 
         testImplementation(KOTEST)
         testImplementation(KOTEST_ASSERTIONS_ARROW)
+        testImplementation(MOCK_K)
     }
 
     /** Lint settings. */
