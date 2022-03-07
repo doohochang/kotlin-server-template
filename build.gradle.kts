@@ -22,6 +22,7 @@ allprojects {
 
     dependencies {
         implementation(kotlin("stdlib"))
+        implementation(kotlin("reflect"))
 
         implementation(KOTLINX_COROUTINES_CORE)
         implementation(ARROW_CORE)

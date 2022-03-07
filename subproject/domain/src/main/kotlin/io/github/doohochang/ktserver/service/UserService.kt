@@ -25,6 +25,8 @@ class UserService(private val userRepository: UserRepository) {
                 }
             }
             .bind()
+
+        User(id, name)
     }
 
     suspend fun delete(id: String): Either<DeleteFailure, Unit> =

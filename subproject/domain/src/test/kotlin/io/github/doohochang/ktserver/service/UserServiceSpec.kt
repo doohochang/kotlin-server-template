@@ -78,13 +78,13 @@ class UserServiceSpec : FreeSpec({
         val updatedUser = User(user.id, newUserName)
 
         "should return the updated user when the repository succeeds." {
-            coEvery { userRepository.update(user.id, newUserName) } returns Either.Right(updatedUser)
+            coEvery { userRepository.update(user.id, newUserName) } returns Either.Right(Unit)
             userService.update(user.id, newUserName) shouldBe Either.Right(updatedUser)
             coVerify(exactly = 1) { userRepository.update(user.id, newUserName) }
         }
 
         "should fail when the given user name is invalid." {
-            coEvery { userRepository.update(user.id, "!@#$%") } returns Either.Right(User(user.id, "!@#$%"))
+            coEvery { userRepository.update(user.id, "!@#$%") } returns Either.Right(Unit)
             userService.update(user.id, "!@#$%")
                 .shouldBeLeft()
                 .shouldBeTypeOf<UserService.Dto.UpdateFailure.InvalidName>()
