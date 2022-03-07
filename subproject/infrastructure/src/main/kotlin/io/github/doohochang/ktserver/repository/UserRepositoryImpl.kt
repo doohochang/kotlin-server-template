@@ -6,13 +6,15 @@ import io.github.doohochang.ktserver.util.randomAlphanumericString
 import io.r2dbc.postgresql.PostgresqlConnectionFactory
 import kotlinx.coroutines.reactor.awaitSingle
 import org.springframework.data.r2dbc.core.*
+import org.springframework.data.relational.core.mapping.Column
 import org.springframework.data.relational.core.mapping.Table
 import org.springframework.data.relational.core.query.Criteria.where
 import org.springframework.data.relational.core.query.Query.query
 import org.springframework.data.relational.core.query.Update
 
 class UserRepositoryImpl(private val connectionFactory: PostgresqlConnectionFactory) : UserRepository {
-    val template = R2dbcEntityTemplate(connectionFactory)
+    private val template = R2dbcEntityTemplate(connectionFactory)
+
     override suspend fun find(id: String): Either<UserRepository.Dto.FindFailure, User?> = try {
         val row = template
             .select<UserRow>()
@@ -79,8 +81,8 @@ class UserRepositoryImpl(private val connectionFactory: PostgresqlConnectionFact
 
         @Table(USER_TABLE)
         data class UserRow(
-            val id: String,
-            val name: String
+            @Column(USER_ID) val id: String,
+            @Column(USER_NAME) val name: String
         )
 
         private fun UserRow.toDomain(): User = User(id, name)
