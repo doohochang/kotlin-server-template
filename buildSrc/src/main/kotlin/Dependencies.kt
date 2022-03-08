@@ -35,4 +35,5 @@ val DependencyHandlerScope.TYPESAFE_CONFIG get() = "com.typesafe:config:${Versio
 
 val DependencyHandlerScope.SPRING_DATA_R2DBC get() = "org.springframework.data:spring-data-r2dbc:${Version.SPRING_DATA_R2DBC}"
 val DependencyHandlerScope.R2DBC_BOM get() = platform("io.r2dbc:r2dbc-bom:${Version.R2DBC_BOM}")
+val DependencyHandlerScope.R2DBC_POOL get() = "io.r2dbc:r2dbc-pool"
 val DependencyHandlerScope.R2DBC_POSTGRESQL get() = "io.r2dbc:r2dbc-postgresql"
