@@ -10,10 +10,14 @@ import org.springframework.data.relational.core.mapping.Column
 import org.springframework.data.relational.core.mapping.Table
 import org.springframework.data.relational.core.query.Criteria.where
 import org.springframework.data.relational.core.query.Query.query
-import org.springframework.data.relational.core.query.Update
+import org.springframework.r2dbc.core.awaitSingleOrNull
+import org.springframework.transaction.annotation.Isolation
+import org.springframework.transaction.annotation.Transactional
 
-class UserRepositoryImpl(private val connectionFactory: PostgresqlConnectionFactory) : UserRepository {
+open class UserRepositoryImpl(private val connectionFactory: PostgresqlConnectionFactory) : UserRepository {
     private val template = R2dbcEntityTemplate(connectionFactory)
+    private val databaseClient = template.databaseClient
+    private val converter = template.converter
 
     override suspend fun find(id: String): Either<UserRepository.Dto.FindFailure, User?> = try {
         val row = template
@@ -44,17 +48,25 @@ class UserRepositoryImpl(private val connectionFactory: PostgresqlConnectionFact
         Either.Left(UserRepository.Dto.CreateFailure(e.stackTraceToString()))
     }
 
-    override suspend fun update(id: String, name: String): Either<UserRepository.Dto.UpdateFailure, Unit> = try {
-        val updatedCount = template
-            .update<UserRow>()
-            .matching(
-                query(where(USER_ID).`is`(id))
+    @Transactional(isolation = Isolation.READ_COMMITTED) // An example using @Transactional.
+    override suspend fun update(id: String, name: String): Either<UserRepository.Dto.UpdateFailure, User> = try {
+        // Another querying style using DatabaseClient instead of R2dbcEntityTemplate.
+        val updatedUser = databaseClient
+            .sql(
+                """
+                update ${USER_TABLE}
+                set name = :name
+                where id = :id
+                returning *
+                """.trimIndent()
             )
-            .apply(Update.update(USER_NAME, name))
-            .awaitSingle()
+            .bind("name", name)
+            .bind("id", id)
+            .convert<UserRow>(converter)
+            .awaitSingleOrNull()
 
-        if (updatedCount == 0) Either.Left(UserRepository.Dto.UpdateFailure.UserDoesNotExist(id))
-        else Either.Right(Unit)
+        if (updatedUser == null) Either.Left(UserRepository.Dto.UpdateFailure.UserDoesNotExist(id))
+        else Either.Right(updatedUser.toDomain())
     } catch (e: Throwable) {
         Either.Left(UserRepository.Dto.UpdateFailure.TransactionFailed(e.stackTraceToString()))
     }
