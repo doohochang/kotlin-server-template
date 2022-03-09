@@ -20,6 +20,10 @@ open class UserRepositoryImpl(connectionFactory: ConnectionFactory) : UserReposi
     private val converter = template.converter
 
     override suspend fun find(id: String): Either<UserRepository.Dto.FindFailure, User?> = try {
+        /*
+        An example using Spring Data Fluent API provided by [R2dbcEntityTemplate].
+        It provides type-safe DSL to query data, but it still does not support relational queries such as join.
+         */
         val row = template
             .select<UserRow>()
             .from(USER_TABLE)
@@ -48,9 +52,16 @@ open class UserRepositoryImpl(connectionFactory: ConnectionFactory) : UserReposi
         Either.Left(UserRepository.Dto.CreateFailure(e.stackTraceToString()))
     }
 
-    @Transactional(isolation = Isolation.READ_COMMITTED) // An example using @Transactional.
+    /*
+    An example using [@Transactional] annotation which seals all queries executed in the function into an atomic transaction.
+     */
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     override suspend fun update(id: String, name: String): Either<UserRepository.Dto.UpdateFailure, User> = try {
-        // Another querying style using DatabaseClient instead of R2dbcEntityTemplate.
+        /*
+        Another querying style using a [DatabaseClient] instead of [R2dbcEntityTemplate].
+        [DatabaseClient] does not support Spring Data Fluent API, but it provides more flexibility to use a database with
+        string queries and parameter binding.
+         */
         val updatedUser = databaseClient
             .sql(
                 """
@@ -62,7 +73,7 @@ open class UserRepositoryImpl(connectionFactory: ConnectionFactory) : UserReposi
             )
             .bind("name", name)
             .bind("id", id)
-            .convert<UserRow>(converter)
+            .convert<UserRow>(converter) // Maps the given query result to [UserRow] by using Spring's [R2dbcConverter].
             .awaitSingleOrNull()
 
         if (updatedUser == null) Either.Left(UserRepository.Dto.UpdateFailure.UserDoesNotExist(id))
