@@ -1,3 +1,7 @@
+plugins {
+    `java-test-fixtures`
+}
+
 repositories {
     mavenCentral()
 }

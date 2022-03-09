@@ -37,9 +37,10 @@ allprojects {
         disabledRules.set(setOf("no-wildcard-imports"))
     }
 
-    /** Test platform setting for Kotest. */
+    /** Test settings. */
     tasks.withType<Test>().configureEach {
-        useJUnitPlatform()
+        useJUnitPlatform() // Platform setting for Kotest.
+        testLogging.showStandardStreams = true // Prints log while test.
     }
 }
 

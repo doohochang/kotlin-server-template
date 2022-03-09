@@ -11,4 +11,10 @@ dependencies {
 
     implementation(KOTLINX_COROUTINES_REACTIVE)
     implementation(KOTLINX_COROUTINES_REACTOR)
+
+    testImplementation(testFixtures(LOGGING))
+
+    implementation(TESTCONTAINERS_BOM)
+    testImplementation(TESTCONTAINERS)
+    testImplementation(TESTCONTAINERS_POSTGRESQL)
 }

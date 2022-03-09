@@ -13,6 +13,11 @@ val DependencyHandlerScope.KOTEST get() = "io.kotest:kotest-runner-junit5:${Vers
 val DependencyHandlerScope.KOTEST_ASSERTIONS_ARROW
     get() = "io.kotest.extensions:kotest-assertions-arrow:${Version.KOTEST_ASSERTIONS_ARROW}"
 
+val DependencyHandlerScope.TESTCONTAINERS_BOM
+    get() = platform("org.testcontainers:testcontainers-bom:${Version.TESTCONTAINERS_BOM}")
+val DependencyHandlerScope.TESTCONTAINERS get() = "org.testcontainers:testcontainers"
+val DependencyHandlerScope.TESTCONTAINERS_POSTGRESQL get() = "org.testcontainers:postgresql"
+
 val DependencyHandlerScope.MOCK_K get() = "io.mockk:mockk:${Version.MOCK_K}"
 
 val DependencyHandlerScope.KOTLINX_COROUTINES_CORE
