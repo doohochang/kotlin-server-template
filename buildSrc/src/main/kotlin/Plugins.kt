@@ -13,9 +13,9 @@ fun PluginAware.applyKotlinJvmPlugin() {
     apply(plugin = "org.jetbrains.kotlin.jvm")
 }
 
-val PluginDependenciesSpec.gradleKtlint get() = id("org.jlleitschuh.gradle.ktlint") version Version.GRADLE_KTLINT
+val PluginDependenciesSpec.ktlint get() = id("org.jlleitschuh.gradle.ktlint") version Version.GRADLE_KTLINT
 fun PluginAware.applyGradleKtlintPlugin() {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
 }
 
-val PluginDependenciesSpec.gradleShadow get() = id("com.github.johnrengelman.shadow") version Version.GRADLE_SHADOW
+val PluginDependenciesSpec.shadow get() = id("com.github.johnrengelman.shadow") version Version.GRADLE_SHADOW

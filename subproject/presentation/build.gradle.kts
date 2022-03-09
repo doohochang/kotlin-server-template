@@ -13,4 +13,6 @@ dependencies {
     implementation(KTOR_SERIALIZATION)
 
     implementation(TYPESAFE_CONFIG)
+
+    testImplementation(testFixtures(LOGGING))
 }

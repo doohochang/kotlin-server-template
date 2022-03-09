@@ -6,6 +6,8 @@ object Version {
     const val KOTEST = "5.1.0"
     const val KOTEST_ASSERTIONS_ARROW = "1.2.3"
 
+    const val TESTCONTAINERS_BOM = "1.16.3"
+
     const val MOCK_K = "1.12.3"
 
     const val GRADLE_KTLINT = "10.2.1"
@@ -21,4 +23,7 @@ object Version {
     const val KTOR = "1.6.7"
 
     const val TYPESAFE_CONFIG = "1.4.1"
+
+    const val SPRING_DATA_R2DBC = "1.4.2"
+    const val R2DBC_BOM = "Arabba-SR12"
 }

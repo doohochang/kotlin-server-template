@@ -3,8 +3,8 @@ plugins {
     kotlinJvm
     application
 
-    gradleKtlint
-    gradleShadow
+    ktlint
+    shadow
 }
 
 /** Settings for all projects from here. */
@@ -22,6 +22,7 @@ allprojects {
 
     dependencies {
         implementation(kotlin("stdlib"))
+        implementation(kotlin("reflect"))
 
         implementation(KOTLINX_COROUTINES_CORE)
         implementation(ARROW_CORE)
@@ -36,9 +37,10 @@ allprojects {
         disabledRules.set(setOf("no-wildcard-imports"))
     }
 
-    /** Test platform setting for Kotest. */
+    /** Test settings. */
     tasks.withType<Test>().configureEach {
-        useJUnitPlatform()
+        useJUnitPlatform() // Platform setting for Kotest.
+        testLogging.showStandardStreams = true // Prints log while test.
     }
 }
 

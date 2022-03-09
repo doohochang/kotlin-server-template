@@ -13,6 +13,9 @@ It aims to help you build a service by providing reusable code examples that is 
 * [Typesafe Config](https://github.com/lightbend/config) for configuration using HOCON files.
 * [Arrow Core](https://arrow-kt.io/docs/core/) for type-safe error handling.
   * Uses only basic features such as `Either`.
+* [Spring Data R2DBC](https://spring.io/projects/spring-data-r2dbc) and [PostgreSQL](http://postgresql.org) for persistence.
+  * Uses Spring Data R2DBC as a client of R2DBC, but does not depend on Spring IoC or Spring Boot.
+  * Uses `r2dbc-pool` to manage database connections, `r2dbc-postgresql` as a R2DBC driver.
 
 ## Architecture
 This project consists of several Gradle subprojects separated based on Domain-driven design (DDD) as below.
