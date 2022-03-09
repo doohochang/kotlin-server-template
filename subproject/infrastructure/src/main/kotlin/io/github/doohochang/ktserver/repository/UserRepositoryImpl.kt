@@ -54,7 +54,7 @@ open class UserRepositoryImpl(private val connectionFactory: PostgresqlConnectio
         val updatedUser = databaseClient
             .sql(
                 """
-                update ${USER_TABLE}
+                update $USER_TABLE
                 set name = :name
                 where id = :id
                 returning *
