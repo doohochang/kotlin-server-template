@@ -8,7 +8,9 @@ data class PostgresqlConfiguration(
     val port: Int,
     val database: String,
     val username: String,
-    val password: String
+    val password: String,
+    val connectionInitialCount: Int,
+    val connectionMaxCount: Int
 ) {
     companion object {
         fun from(config: Config): Either<Throwable, PostgresqlConfiguration> =
@@ -20,7 +22,9 @@ data class PostgresqlConfiguration(
                         port = postgresqlConfig.getInt("port"),
                         database = postgresqlConfig.getString("database"),
                         username = postgresqlConfig.getString("username"),
-                        password = postgresqlConfig.getString("password")
+                        password = postgresqlConfig.getString("password"),
+                        connectionInitialCount = postgresqlConfig.getInt("connection-initial-count"),
+                        connectionMaxCount = postgresqlConfig.getInt("connection-max-count")
                     )
                 )
             } catch (failure: Throwable) {
