@@ -15,7 +15,7 @@ fun Application.installUserApi(userService: UserService) = routing {
         val id = call.parameters["id"]!!
         userService.get(id).fold(
             ifRight = {
-                if (it != null) call.respond(it)
+                if (it != null) call.respond(it.toJson())
                 else call.respond(HttpStatusCode.NotFound)
             },
             ifLeft = {
@@ -45,8 +45,9 @@ fun Application.installUserApi(userService: UserService) = routing {
     }
 
     patch("/users/{id}") {
+        val id = call.parameters["id"]!!
         val request = call.receive<PatchUserRequest>()
-        userService.update(request.id, request.name).fold(
+        userService.update(id, request.name).fold(
             ifRight = {
                 call.respond(it.toJson())
             },

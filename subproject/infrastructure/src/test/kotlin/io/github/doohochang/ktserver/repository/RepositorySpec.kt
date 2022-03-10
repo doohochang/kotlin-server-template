@@ -1,12 +1,10 @@
 package io.github.doohochang.ktserver.repository
 
+import io.github.doohochang.ktserver.configuration.PostgresqlConfiguration
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
-import io.r2dbc.pool.PoolingConnectionFactoryProvider.MAX_SIZE
-import io.r2dbc.spi.ConnectionFactories
-import io.r2dbc.spi.ConnectionFactoryOptions.*
 import org.slf4j.LoggerFactory
 import org.springframework.r2dbc.core.DatabaseClient
 import org.springframework.r2dbc.core.await
@@ -22,25 +20,22 @@ class RepositorySpec : FreeSpec({
         .withPassword(POSTGRESQL_PASSWORD)
         .withLogConsumer(Slf4jLogConsumer(log))
 
-    val connectionPool by lazy {
-        ConnectionFactories.get(
-            builder()
-                .option(DRIVER, "pool")
-                .option(PROTOCOL, "postgresql")
-                .option(HOST, "localhost")
-                .option(PORT, container.getMappedPort(POSTGRESQL_PORT))
-                .option(USER, POSTGRESQL_USERNAME)
-                .option(PASSWORD, POSTGRESQL_PASSWORD)
-                .option(DATABASE, POSTGRESQL_DATABASE)
-                .option(MAX_SIZE, CONNECTION_POOL_MAX_SIZE)
-                .build()
-        )
-    }
+    val configuration = PostgresqlConfiguration(
+        host = POSTGRESQL_HOST,
+        port = POSTGRESQL_PORT,
+        database = POSTGRESQL_DATABASE,
+        username = POSTGRESQL_USERNAME,
+        password = POSTGRESQL_PASSWORD,
+        connectionInitialCount = CONNECTION_POOL_INITIAL_COUNT,
+        connectionMaxCount = CONNECTION_POOL_MAX_COUNT
+    )
+
+    val connectionPool by lazy { PostgresqlConnectionPool(configuration) }
 
     beforeSpec {
         container.start()
 
-        val databaseClient = DatabaseClient.create(connectionPool)
+        val databaseClient = DatabaseClient.create(connectionPool.instance)
         val initScript = this::class.java.classLoader.getResource(POSTGRESQL_INIT_SCRIPT_PATH)!!.readText()
         databaseClient.sql(initScript).await()
     }
@@ -85,11 +80,13 @@ class RepositorySpec : FreeSpec({
 }) {
     companion object {
         const val POSTGRESQL_IMAGE_TAG = "postgres:14.2"
+        const val POSTGRESQL_INIT_SCRIPT_PATH = "init-test.sql"
         const val POSTGRESQL_DATABASE = "testdb"
         const val POSTGRESQL_USERNAME = "tester"
         const val POSTGRESQL_PASSWORD = "tester"
+        const val POSTGRESQL_HOST = "localhost"
         const val POSTGRESQL_PORT = 5432
-        const val POSTGRESQL_INIT_SCRIPT_PATH = "init-test.sql"
-        const val CONNECTION_POOL_MAX_SIZE = 20
+        const val CONNECTION_POOL_INITIAL_COUNT = 10
+        const val CONNECTION_POOL_MAX_COUNT = 20
     }
 }

@@ -3,19 +3,36 @@ package io.github.doohochang.ktserver
 import arrow.core.Either
 import arrow.core.computations.either
 import com.typesafe.config.ConfigFactory
+import io.github.doohochang.ktserver.configuration.PostgresqlConfiguration
 import io.github.doohochang.ktserver.http.HttpConfiguration
 import io.github.doohochang.ktserver.http.Server
+import io.github.doohochang.ktserver.repository.PostgresqlConnectionPool
+import io.github.doohochang.ktserver.repository.UserRepositoryImpl
+import io.github.doohochang.ktserver.service.UserService
+import org.slf4j.LoggerFactory
 
 suspend fun main() {
-    val result = either<Throwable, Unit> {
-        val config = ConfigFactory.load()
-        val httpConfiguration = HttpConfiguration.from(config).bind()
+    val bootResult = either<Throwable, Unit> {
+        // Dependency injection from here.
+        val rootConfiguration = ConfigFactory.load()
+        val httpConfiguration = HttpConfiguration.from(rootConfiguration).bind()
+        val postgresqlConfiguration = PostgresqlConfiguration.from(rootConfiguration).bind()
 
-        Server.start(httpConfiguration.port)
+        val postgresqlConnectionPool = PostgresqlConnectionPool(postgresqlConfiguration)
+        val userRepository = UserRepositoryImpl(postgresqlConnectionPool)
+
+        val userService = UserService(userRepository)
+
+        val httpServer = Server(httpConfiguration, userService)
+
+        // Starts the server.
+        httpServer.start()
     }
 
-    when (result) {
-        is Either.Right -> println("Server has been started successfully.")
-        is Either.Left -> println(result.value)
+    val log = LoggerFactory.getLogger("io.github.doohochang.ktserver.MainKt")
+
+    when (bootResult) {
+        is Either.Right -> log.info("Server has been started successfully.")
+        is Either.Left -> log.error(bootResult.value.stackTraceToString())
     }
 }
