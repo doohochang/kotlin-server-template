@@ -20,15 +20,17 @@ class RepositorySpec : FreeSpec({
         .withPassword(POSTGRESQL_PASSWORD)
         .withLogConsumer(Slf4jLogConsumer(log))
 
-    val configuration = PostgresqlConfiguration(
-        host = POSTGRESQL_HOST,
-        port = POSTGRESQL_PORT,
-        database = POSTGRESQL_DATABASE,
-        username = POSTGRESQL_USERNAME,
-        password = POSTGRESQL_PASSWORD,
-        connectionInitialCount = CONNECTION_POOL_INITIAL_COUNT,
-        connectionMaxCount = CONNECTION_POOL_MAX_COUNT
-    )
+    val configuration by lazy {
+        PostgresqlConfiguration(
+            host = POSTGRESQL_HOST,
+            port = container.getMappedPort(POSTGRESQL_PORT),
+            database = POSTGRESQL_DATABASE,
+            username = POSTGRESQL_USERNAME,
+            password = POSTGRESQL_PASSWORD,
+            connectionInitialCount = CONNECTION_POOL_INITIAL_COUNT,
+            connectionMaxCount = CONNECTION_POOL_MAX_COUNT
+        )
+    }
 
     val connectionPool by lazy { PostgresqlConnectionPool(configuration) }
 
