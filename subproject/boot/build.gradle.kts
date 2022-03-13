@@ -12,4 +12,8 @@ dependencies {
 
     testImplementation(testFixtures(PRESENTATION))
     testImplementation(testFixtures(INFRASTRUCTURE))
+
+    testImplementation(KTOR_CLIENT_CORE)
+    testImplementation(KTOR_CLIENT_CIO)
+    testImplementation(KTOR_CLIENT_SERIALIZATION)
 }

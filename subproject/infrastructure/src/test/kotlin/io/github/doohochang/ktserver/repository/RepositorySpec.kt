@@ -6,6 +6,10 @@ import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
+/**
+ * Contains integration tests for repositories in infrastructure layer.
+ * It tests the repositories with database containers instantiated by Testcontainers.
+ */
 class RepositorySpec : FreeSpec({
     "Integration test for repositories" - {
         val postgresql = Postgresql(POSTGRESQL_DATABASE, POSTGRESQL_USERNAME, POSTGRESQL_PASSWORD)
