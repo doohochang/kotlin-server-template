@@ -1,21 +1,17 @@
 package io.github.doohochang.ktserver
 
-import arrow.core.Either
-import arrow.core.computations.either
-import com.typesafe.config.ConfigFactory
-import io.github.doohochang.ktserver.http.HttpConfiguration
-import io.github.doohochang.ktserver.http.Server
+import org.slf4j.LoggerFactory
 
 suspend fun main() {
-    val result = either<Throwable, Unit> {
-        val config = ConfigFactory.load()
-        val httpConfiguration = HttpConfiguration.from(config).bind()
+    val log = LoggerFactory.getLogger("io.github.doohochang.ktserver.MainKt")
 
-        Server.start(httpConfiguration.port)
-    }
+    try {
+        val application = Application.load()
 
-    when (result) {
-        is Either.Right -> println("Server has been started successfully.")
-        is Either.Left -> println(result.value)
+        // Starts the server.
+        application.presentation.httpServer.start()
+        log.info("Server has been started successfully.")
+    } catch (e: Throwable) {
+        log.error(e.stackTraceToString())
     }
 }

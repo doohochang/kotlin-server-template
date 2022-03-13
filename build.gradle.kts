@@ -5,6 +5,7 @@ plugins {
 
     ktlint
     shadow
+    `java-test-fixtures`
 }
 
 /** Settings for all projects from here. */
@@ -13,6 +14,7 @@ allprojects {
     version = Version.KOTLIN_SERVER_TEMPLATE
 
     applyJavaPlugin()
+    applyJavaTestFixturesPlugin()
     applyKotlinJvmPlugin()
     applyGradleKtlintPlugin()
 
@@ -30,6 +32,10 @@ allprojects {
         testImplementation(KOTEST)
         testImplementation(KOTEST_ASSERTIONS_ARROW)
         testImplementation(MOCK_K)
+
+        testFixturesImplementation(KOTEST)
+        testFixturesImplementation(KOTEST_ASSERTIONS_ARROW)
+        testFixturesImplementation(MOCK_K)
     }
 
     /** Lint settings. */

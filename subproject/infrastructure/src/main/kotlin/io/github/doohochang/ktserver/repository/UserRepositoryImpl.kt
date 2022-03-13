@@ -3,7 +3,6 @@ package io.github.doohochang.ktserver.repository
 import arrow.core.Either
 import io.github.doohochang.ktserver.entity.User
 import io.github.doohochang.ktserver.util.randomAlphanumericString
-import io.r2dbc.spi.ConnectionFactory
 import kotlinx.coroutines.reactor.awaitSingle
 import org.springframework.data.r2dbc.core.*
 import org.springframework.data.relational.core.mapping.Column
@@ -14,8 +13,8 @@ import org.springframework.r2dbc.core.awaitSingleOrNull
 import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
 
-open class UserRepositoryImpl(connectionFactory: ConnectionFactory) : UserRepository {
-    private val template = R2dbcEntityTemplate(connectionFactory)
+open class UserRepositoryImpl(connectionPool: PostgresqlConnectionPool) : UserRepository {
+    private val template = R2dbcEntityTemplate(connectionPool.instance)
     private val databaseClient = template.databaseClient
     private val converter = template.converter
 

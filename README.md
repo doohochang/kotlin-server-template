@@ -16,6 +16,7 @@ It aims to help you build a service by providing reusable code examples that is 
 * [Spring Data R2DBC](https://spring.io/projects/spring-data-r2dbc) and [PostgreSQL](http://postgresql.org) for persistence.
   * Uses Spring Data R2DBC as a client of R2DBC, but does not depend on Spring IoC or Spring Boot.
   * Uses `r2dbc-pool` to manage database connections, `r2dbc-postgresql` as a R2DBC driver.
+* [Testcontainers](https://www.testcontainers.org) for integration testing.
 
 ## Architecture
 This project consists of several Gradle subprojects separated based on Domain-driven design (DDD) as below.
@@ -50,3 +51,68 @@ It also contains several resource files to run a server.
 Each subproject's build.gradle.kts contains settings only for its own subproject.
 * Dependencies for the subproject.
 * Several plugin settings for the subproject.
+
+## Testing
+Examples of unit test, integration test, and end-to-end test are all included in this project.
+* Unit tests are usually written for entities, services in domain layer.
+  * [UserSpec](subproject/domain/src/test/kotlin/io/github/doohochang/ktserver/entity/UserSpec.kt)
+  * [UserServiceSpec](subproject/domain/src/test/kotlin/io/github/doohochang/ktserver/service/UserServiceSpec.kt)
+* Integration tests are usually written for repositories in infrastructure layer by using Testcontainers.
+  * [RepositorySpec](subproject/infrastructure/src/test/kotlin/io/github/doohochang/ktserver/repository/RepositorySpec.kt)
+* End-to-end tests are usually written in boot layer in order to test the server APIs.
+  * [EndToEndSpec](subproject/boot/src/test/kotlin/io/github/doohochang/ktserver/EndToEndTestSpec.kt)
+
+## Server API
+The server provides simple API examples as follows.
+* `GET /greeting/{name}`
+  ```
+  > curl -X GET http://localhost:8080/greeting/alice
+  HTTP/1.1 200 OK
+  Content-Type: text/plain; charset=UTF-8
+  Hello, alice.
+  ```
+* `GET /users/{id}`
+  ```
+  > curl -X GET http://localhost:8080/users/existing-user
+  HTTP/1.1 200 OK
+  Content-Type: application/json; charset=UTF-8
+  {"id":"existing-user","name":"..."}
+  
+  > curl -X GET http://localhost:8080/users/non-existing-user
+  HTTP/1.1 404 Not Found
+  ```
+* `POST /users/{id}`: Creates a user.
+  ```
+  > curl -i -X POST http://localhost:8080/users -H "Content-Type: application/json" -d '{ "name": "bob" }'
+  HTTP/1.1 200 OK
+  Content-Type: application/json; charset=UTF-8
+  {"id":"some-random-id","name":"bob"}
+  
+  > curl -i -X POST http://localhost:8080/users -H "Content-Type: application/json" -d '{ "name": "!@" }'
+  HTTP/1.1 400 Bad Request
+  Content-Type: text/plain; charset=UTF-8
+  User name must be alphanumeric.
+  ```
+* `PATCH /users/{id}`: Updates a user.
+  ```
+  > curl -i -X PATCH http://localhost:8080/users/existing-user -H "Content-Type: application/json" -d '{ "name": "charlie" }'
+  HTTP/1.1 200 OK
+  Content-Type: application/json; charset=UTF-8
+  {"id":"existing-user","name":"charlie"}
+  
+  > curl -i -X POST http://localhost:8080/users/existing-user -H "Content-Type: application/json" -d '{ "name": "!@" }'
+  HTTP/1.1 400 Bad Request
+  Content-Type: text/plain; charset=UTF-8
+  User name must be alphanumeric.
+  
+  > curl -i -X POST http://localhost:8080/users/non-existing-user -H "Content-Type: application/json" -d '{ "name": "damien" }'
+  HTTP/1.1 404 Not Found
+  ```
+* `DELETE /users/{id}`
+  ```
+  > curl -i -X DELETE http://localhost:8080/users/existing-user
+  HTTP/1.1 200 OK
+  
+  > curl -i -X POST http://localhost:8080/users/non-existing-user
+  HTTP/1.1 404 Not Found
+  ```

@@ -2,6 +2,6 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/subproject/infrastructure/src/main/resources/sql/0.1.0.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/subproject/infrastructure/src/test/resources/init-test.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/subproject/infrastructure/src/testFixtures/resources/init-test.sql" dialect="PostgreSQL" />
   </component>
 </project>

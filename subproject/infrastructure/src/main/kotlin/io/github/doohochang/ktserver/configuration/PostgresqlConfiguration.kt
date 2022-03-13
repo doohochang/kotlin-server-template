@@ -1,6 +1,5 @@
 package io.github.doohochang.ktserver.configuration
 
-import arrow.core.Either
 import com.typesafe.config.Config
 
 data class PostgresqlConfiguration(
@@ -13,22 +12,18 @@ data class PostgresqlConfiguration(
     val connectionMaxCount: Int
 ) {
     companion object {
-        fun from(config: Config): Either<Throwable, PostgresqlConfiguration> =
-            try {
-                val postgresqlConfig = config.getConfig("postgresql")
-                Either.Right(
-                    PostgresqlConfiguration(
-                        host = postgresqlConfig.getString("host"),
-                        port = postgresqlConfig.getInt("port"),
-                        database = postgresqlConfig.getString("database"),
-                        username = postgresqlConfig.getString("username"),
-                        password = postgresqlConfig.getString("password"),
-                        connectionInitialCount = postgresqlConfig.getInt("connection-initial-count"),
-                        connectionMaxCount = postgresqlConfig.getInt("connection-max-count")
-                    )
-                )
-            } catch (failure: Throwable) {
-                Either.Left(failure)
-            }
+        fun from(config: Config): PostgresqlConfiguration {
+            val postgresqlConfig = config.getConfig("postgresql")
+
+            return PostgresqlConfiguration(
+                host = postgresqlConfig.getString("host"),
+                port = postgresqlConfig.getInt("port"),
+                database = postgresqlConfig.getString("database"),
+                username = postgresqlConfig.getString("username"),
+                password = postgresqlConfig.getString("password"),
+                connectionInitialCount = postgresqlConfig.getInt("connection-initial-count"),
+                connectionMaxCount = postgresqlConfig.getInt("connection-max-count")
+            )
+        }
     }
 }
