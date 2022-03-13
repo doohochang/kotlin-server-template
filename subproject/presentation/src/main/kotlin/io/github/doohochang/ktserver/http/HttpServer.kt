@@ -27,6 +27,6 @@ class HttpServer(
     }
 
     fun stop() {
-        embeddedServer.stop(3, 10, TimeUnit.SECONDS)
+        embeddedServer.stop(1, 3, TimeUnit.SECONDS)
     }
 }

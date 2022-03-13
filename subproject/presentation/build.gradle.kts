@@ -18,4 +18,5 @@ dependencies {
 
     testFixturesImplementation(KTOR_CLIENT_CORE)
     testFixturesImplementation(KTOR_CLIENT_CIO)
+    testFixturesImplementation(KTOR_CLIENT_SERIALIZATION)
 }
