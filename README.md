@@ -59,7 +59,7 @@ Examples of unit test, integration test, and end-to-end test are all included in
   * [UserServiceSpec](subproject/domain/src/test/kotlin/io/github/doohochang/ktserver/service/UserServiceSpec.kt)
 * Integration tests are usually written for repositories in infrastructure layer by using Testcontainers.
   * [RepositorySpec](subproject/infrastructure/src/test/kotlin/io/github/doohochang/ktserver/repository/RepositorySpec.kt)
-* End-to-end tests are usually written in boot layer in order to test the server APIs.
+* End-to-end tests are written in boot layer usually for testing the server APIs.
   * [EndToEndSpec](subproject/boot/src/test/kotlin/io/github/doohochang/ktserver/EndToEndTestSpec.kt)
 
 ## Server API
