@@ -35,6 +35,8 @@ val DependencyHandlerScope.LOGBACK get() = "ch.qos.logback:logback-classic:${Ver
 val DependencyHandlerScope.KTOR_SERVER_CORE get() = "io.ktor:ktor-server-core:${Version.KTOR}"
 val DependencyHandlerScope.KTOR_SERVER_NETTY get() = "io.ktor:ktor-server-netty:${Version.KTOR}"
 val DependencyHandlerScope.KTOR_SERIALIZATION get() = "io.ktor:ktor-serialization:${Version.KTOR}"
+val DependencyHandlerScope.KTOR_CLIENT_CORE get() = "io.ktor:ktor-client-core:${Version.KTOR}"
+val DependencyHandlerScope.KTOR_CLIENT_CIO get() = "io.ktor:ktor-client-cio:${Version.KTOR}"
 
 val DependencyHandlerScope.TYPESAFE_CONFIG get() = "com.typesafe:config:${Version.TYPESAFE_CONFIG}"
 

@@ -9,4 +9,7 @@ dependencies {
     implementation(LOGGING)
 
     implementation(TYPESAFE_CONFIG)
+
+    testImplementation(testFixtures(PRESENTATION))
+    testImplementation(testFixtures(INFRASTRUCTURE))
 }

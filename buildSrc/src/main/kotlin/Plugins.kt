@@ -8,6 +8,10 @@ fun PluginAware.applyJavaPlugin() {
     apply(plugin = "java")
 }
 
+fun PluginAware.applyJavaTestFixturesPlugin() {
+    apply(plugin = "org.gradle.java-test-fixtures")
+}
+
 val PluginDependenciesSpec.kotlinJvm get() = kotlin("jvm") version Version.KOTLIN
 fun PluginAware.applyKotlinJvmPlugin() {
     apply(plugin = "org.jetbrains.kotlin.jvm")

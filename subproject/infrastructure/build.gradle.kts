@@ -14,7 +14,12 @@ dependencies {
 
     testImplementation(testFixtures(LOGGING))
 
-    implementation(TESTCONTAINERS_BOM)
-    testImplementation(TESTCONTAINERS)
-    testImplementation(TESTCONTAINERS_POSTGRESQL)
+    testFixturesImplementation(SPRING_DATA_R2DBC)
+    testFixturesImplementation(R2DBC_BOM)
+    testFixturesImplementation(R2DBC_POOL)
+    testFixturesImplementation(R2DBC_POSTGRESQL)
+
+    testFixturesImplementation(TESTCONTAINERS_BOM)
+    testFixturesImplementation(TESTCONTAINERS)
+    testFixturesImplementation(TESTCONTAINERS_POSTGRESQL)
 }

@@ -6,18 +6,27 @@ import io.ktor.features.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
+import java.util.concurrent.TimeUnit
 
-class Server(
+class HttpServer(
     private val httpConfiguration: HttpConfiguration,
     private val userService: UserService
 ) {
-    fun start() {
+    private val embeddedServer by lazy {
         embeddedServer(Netty, port = httpConfiguration.port) {
             install(ContentNegotiation) { json() }
             installCallLogging()
 
             installGreetingApi()
             installUserApi(userService)
-        }.start(wait = false)
+        }
+    }
+
+    fun start() {
+        embeddedServer.start(wait = false)
+    }
+
+    fun stop() {
+        embeddedServer.stop(3, 10, TimeUnit.SECONDS)
     }
 }
