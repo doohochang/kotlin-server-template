@@ -65,4 +65,22 @@ tasks {
             attributes(Pair("Main-Class", "io.github.doohochang.ktserver.MainKt"))
         }
     }
+
+    /** Builds a Docker image with the current project, and then publish it to local Docker registry. */
+    register("publishDocker") {
+        dependsOn("installDist")
+        doLast {
+            exec {
+                commandLine(
+                    "docker",
+                    "build",
+                    "-t",
+                    "kotlin-server-template:latest",
+                    "-t",
+                    "kotlin-server-template:$version",
+                    "."
+                )
+            }
+        }
+    }
 }
